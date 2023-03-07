@@ -7,6 +7,7 @@ export default {
     data() {
         return {
             search: "", //ricerca
+            listMovies: [], //film
         }
     },
     //Metodi
@@ -22,7 +23,19 @@ export default {
             })
             .then((res) => {
                 const results = res.data.results; //salvo i risultati della ricerca
+                //Ciclo
+                for (let i = 0; i < results.length; i++) {
+                    //Film
+                    let movie = {
+                        title: results[i].title,
+                        original_title: results[i].original_title, 
+                        original_language: results[i].original_language, 
+                        vote_average: results[i].vote_average,
+                    };
+                    this.listMovies.push(movie); //inserisco il film dentro la lista dei film
+                }
                 console.log(results); //stampo i risultati della ricerca
+                console.log(this.listMovies); //stampo la lista dei film
             });
         }
     }
