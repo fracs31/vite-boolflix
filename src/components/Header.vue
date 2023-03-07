@@ -25,6 +25,7 @@ export default {
             axios.get("https://api.themoviedb.org/3/search/movie?api_key=4cb5867956b2d28be2e1ac26f742a720", {
                 //Parametri
                 params: {
+                    language: "it-IT", //lingua
                     query: this.search, //ricerca
                 }
             })
@@ -39,6 +40,7 @@ export default {
                         original_language: results[i].original_language, //lingua originale film
                         vote_average: this.parseStars(results[i].vote_average), //voto medio del film
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine del film
+                        overview: results[i].overview, //trama del film
                     };
                     this.store.listSearch.push(movie); //inserisco il film dentro la lista della ricerca
                 }
@@ -52,6 +54,7 @@ export default {
             axios.get("https://api.themoviedb.org/3/search/tv?api_key=4cb5867956b2d28be2e1ac26f742a720", {
                 //Parametri
                 params: {
+                    language: "it-IT", //lingua
                     query: this.search, //ricerca
                 }
             })
@@ -66,6 +69,7 @@ export default {
                         original_language: results[i].original_language, //lingua originale della serie tv
                         vote_average: this.parseStars(results[i].vote_average), //voto medio della serie tv
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine della serie tv
+                        overview: results[i].overview, //trama della serie tv
                     };
                     this.store.listSearch.push(tv); //inserisco la serie tv dentro la lista della ricerca
                 }
