@@ -13,6 +13,12 @@ export default {
     },
     //Metodi
     methods: {
+        //Metodo per cercare sia i film sia le serie tv 
+        fetchMoviesAndTV() {
+            this.store.listSearch = []; //azzero la lista di film e serie tv
+            this.fetchMovies(); //cerco i film
+            this.fetchTV(); //cerco le serie tv
+        },
         //Metodo per cercare i film
         fetchMovies() {
             //Effetto la chiamata all'API
@@ -23,7 +29,6 @@ export default {
                 }
             })
             .then((res) => {
-                this.store.listMovies = []; //azzero la lista dei film
                 const results = res.data.results; //salvo i risultati della ricerca
                 //Ciclo
                 for (let i = 0; i < results.length; i++) {
@@ -34,10 +39,10 @@ export default {
                         original_language: results[i].original_language, 
                         vote_average: results[i].vote_average,
                     };
-                    this.store.listMovies.push(movie); //inserisco il film dentro la lista dei film
+                    this.store.listSearch.push(movie); //inserisco il film dentro la lista della ricerca
                 }
                 console.log(results); //stampo i risultati della ricerca
-                console.log(this.store.listMovies); //stampo la lista dei film
+                console.log(this.store.listSearch); //stampo la lista della ricerca
             });
         },
         //Metodo per cercare le serie tv
@@ -50,7 +55,6 @@ export default {
                 }
             })
             .then((res) => {
-                this.store.listTV = []; //azzero la lista delle serie tv
                 const results = res.data.results; //salvo i risultati della ricerca
                 //Ciclo
                 for (let i = 0; i < results.length; i++) {
@@ -61,10 +65,10 @@ export default {
                         original_language: results[i].original_language, 
                         vote_average: results[i].vote_average,
                     };
-                    this.store.listTV.push(tv); //inserisco il film dentro la lista dei film
+                    this.store.listSearch.push(tv); //inserisco la serie tv dentro la lista della ricerca
                 }
                 console.log(results); //stampo i risultati della ricerca
-                console.log(this.store.listTV); //stampo la lista delle serie tv
+                console.log(this.store.listSearch); //stampo la lista della ricerca
             });
         }
     }
@@ -83,7 +87,7 @@ export default {
         <!-- Barra di ricerca -->
         <div class="search">
             <!-- Input -->
-            <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchTV()">
+            <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTV()">
         </div>
     </header>
 </template>
