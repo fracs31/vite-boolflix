@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+ul, ol, menu {
+  list-style-type: none;
+}
+
 /* App */
 #app {
   height: 100vh;
