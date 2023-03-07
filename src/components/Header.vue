@@ -23,6 +23,7 @@ export default {
                 }
             })
             .then((res) => {
+                this.store.listMovies = []; //azzero la lista dei film
                 const results = res.data.results; //salvo i risultati della ricerca
                 //Ciclo
                 for (let i = 0; i < results.length; i++) {
@@ -39,6 +40,33 @@ export default {
                 console.log(this.store.listMovies); //stampo la lista dei film
             });
         },
+        //Metodo per cercare le serie tv
+        fetchTV() {
+            //Effettuo la chiamata all'API
+            axios.get("https://api.themoviedb.org/3/search/tv?api_key=4cb5867956b2d28be2e1ac26f742a720", {
+                //Parametri
+                params: {
+                    query: this.search, //ricerca
+                }
+            })
+            .then((res) => {
+                this.store.listTV = []; //azzero la lista delle serie tv
+                const results = res.data.results; //salvo i risultati della ricerca
+                //Ciclo
+                for (let i = 0; i < results.length; i++) {
+                    //Serie tv
+                    let tv = {
+                        name: results[i].name,
+                        original_name: results[i].original_name, 
+                        original_language: results[i].original_language, 
+                        vote_average: results[i].vote_average,
+                    };
+                    this.store.listTV.push(tv); //inserisco il film dentro la lista dei film
+                }
+                console.log(results); //stampo i risultati della ricerca
+                console.log(this.store.listTV); //stampo la lista delle serie tv
+            });
+        }
     }
 }
 </script>
