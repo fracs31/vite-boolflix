@@ -34,10 +34,11 @@ export default {
                 for (let i = 0; i < results.length; i++) {
                     //Film
                     let movie = {
-                        title: results[i].title,
-                        original_title: results[i].original_title, 
-                        original_language: results[i].original_language, 
-                        vote_average: results[i].vote_average,
+                        title: results[i].title, //titolo del film
+                        original_title: results[i].original_title, //titolo originale del film 
+                        original_language: results[i].original_language, //lingua originale film
+                        vote_average: this.parseStars(results[i].vote_average), //voto medio del film
+                        poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine del film
                     };
                     this.store.listSearch.push(movie); //inserisco il film dentro la lista della ricerca
                 }
@@ -60,16 +61,66 @@ export default {
                 for (let i = 0; i < results.length; i++) {
                     //Serie tv
                     let tv = {
-                        name: results[i].name,
-                        original_name: results[i].original_name, 
-                        original_language: results[i].original_language, 
-                        vote_average: results[i].vote_average,
+                        name: results[i].name, //nome della serie tv
+                        original_name: results[i].original_name, //nome originale della serie tv
+                        original_language: results[i].original_language, //lingua originale della serie tv
+                        vote_average: this.parseStars(results[i].vote_average), //voto medio della serie tv
+                        poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine della serie tv
                     };
                     this.store.listSearch.push(tv); //inserisco la serie tv dentro la lista della ricerca
                 }
                 console.log(results); //stampo i risultati della ricerca
                 console.log(this.store.listSearch); //stampo la lista della ricerca
             });
+        },
+        //Metodo per convertire il voto medio in stelle
+        parseStars(vote) {
+            const number = Math.ceil(vote); //arrotondo per eccesso il voto
+            let stars = 0; //stelle
+            //Switch
+            switch (number) {
+                //Se il voto è uguale ad 1
+                case 1:
+                    stars = 1; //il voto è una stella
+                    break; //break
+                //Se il voto è uguale ad 2
+                case 2:
+                    stars = 1; //il voto è una stella
+                    break; //break
+                //Se il voto è uguale ad 3
+                case 3:
+                    stars = 2; //il voto è due stelle
+                    break; //break
+                //Se il voto è uguale ad 4
+                case 4:
+                    stars = 2; //il voto è due stelle
+                    break; //break
+                //Se il voto è uguale ad 5
+                case 5:
+                    stars = 3; //il voto è tre stelle
+                    break; //break
+                //Se il voto è uguale ad 6
+                case 6:
+                    stars = 3; //il voto è tre stelle
+                    break; //break
+                //Se il voto è uguale ad 6
+                case 7:
+                    stars = 4; //il voto è quattro stelle
+                    break; //break
+                //Se il voto è uguale ad 6
+                case 8:
+                    stars = 4; //il voto è quattro stelle
+                    break; //break
+                //Se il voto è uguale ad 6
+                case 9:
+                    stars = 5; //il voto è cinque stelle
+                    break; //break
+                //Se il voto è uguale ad 6
+                case 10:
+                    stars = 5; //il voto è cinque stelle
+                    break; //break
+            }
+            return stars; //restituisco il numero di stelle
         }
     }
 }
