@@ -64,8 +64,8 @@ export default {
                 for (let i = 0; i < results.length; i++) {
                     //Serie tv
                     let tv = {
-                        name: results[i].name, //nome della serie tv
-                        original_name: results[i].original_name, //nome originale della serie tv
+                        title: results[i].name, //nome della serie tv
+                        original_title: results[i].original_name, //nome originale della serie tv
                         original_language: results[i].original_language, //lingua originale della serie tv
                         vote_average: this.parseStars(results[i].vote_average), //voto medio della serie tv
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine della serie tv
