@@ -1,13 +1,14 @@
 <!-- JavaScript -->
 <script>
 import axios from "axios"; //importo axios
+import store from "../store.js"; //importo lo store
 //Esporto
 export default {
     //Dati
     data() {
         return {
             search: "", //ricerca
-            listMovies: [], //film
+            store, //store
         }
     },
     //Metodi
@@ -32,12 +33,12 @@ export default {
                         original_language: results[i].original_language, 
                         vote_average: results[i].vote_average,
                     };
-                    this.listMovies.push(movie); //inserisco il film dentro la lista dei film
+                    this.store.listMovies.push(movie); //inserisco il film dentro la lista dei film
                 }
                 console.log(results); //stampo i risultati della ricerca
-                console.log(this.listMovies); //stampo la lista dei film
+                console.log(this.store.listMovies); //stampo la lista dei film
             });
-        }
+        },
     }
 }
 </script>
@@ -54,7 +55,7 @@ export default {
         <!-- Barra di ricerca -->
         <div class="search">
             <!-- Input -->
-            <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMovies()">
+            <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchTV()">
         </div>
     </header>
 </template>
