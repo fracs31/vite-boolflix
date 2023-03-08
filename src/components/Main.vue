@@ -34,6 +34,7 @@ export default {
                     v-bind:vote_average="element.vote_average" 
                     v-bind:overview="element.overview"
                     v-bind:genre_ids="element.genre_ids"
+                    v-bind:cast="element.cast"
                 >
                 </Card>
             </li>

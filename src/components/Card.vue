@@ -4,12 +4,13 @@
 export default {
     //Props
     props: {
-        poster_path: String,
-        title: String,
-        original_title: String,
-        vote_average: Number,
-        overview: String,
-        genre_ids: Object,
+        poster_path: String, //immagine
+        title: String, //titolo
+        original_title: String, //titolo originale
+        vote_average: Number, //voto
+        overview: String, //trama
+        genre_ids: Array, //generi
+        cast: Array, //cast
     }
 }
 </script>
@@ -50,6 +51,13 @@ export default {
                 <!-- Genere -->
                 <span class="genre" v-for="genre in genre_ids">
                     {{ genre }}
+                </span>
+            </h3>
+            <!-- Cast -->
+            <h3 class="cast">
+                <!-- Attore -->
+                <span class="actor" v-for="actor in cast">
+                    {{ actor }}
                 </span>
             </h3>
         </div>

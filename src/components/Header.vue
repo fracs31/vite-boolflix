@@ -17,7 +17,7 @@ export default {
         fetchMoviesAndTVs() {
             this.store.listSearch = []; //azzero la lista di film e serie tv
             this.fetchMovies(); //cerco i film
-            this.fetchTVs(); //cerco le serie tv
+            //this.fetchTVs(); //cerco le serie tv
         },
         //Metodo per cercare i film
         fetchMovies() {
@@ -42,6 +42,8 @@ export default {
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine del film
                         overview: results[i].overview, //trama del film
                         genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "movie"), //id dei generi
+                        id: results[i].id, //id del film
+                        cast: this.fetchCastMovie(results[i].id), //cast
                     };
                     this.store.listSearch.push(movie); //inserisco il film dentro la lista della ricerca
                 }
@@ -112,17 +114,23 @@ export default {
             });
         },
         //Metodo per cercare il cast dei film
-        fetchCastMovie() {
+        fetchCastMovie(movie_id) {
+            let cast = []; //array che contiene il cast
             //Effettuo la chiamata all'API
-            axios.get("https://api.themoviedb.org/3/movie/105/credits?api_key=4cb5867956b2d28be2e1ac26f742a720", {
+            axios.get("https://api.themoviedb.org/3/movie/" + movie_id + "/credits?api_key=4cb5867956b2d28be2e1ac26f742a720", {
                 //Parametri
                 params: {
                     language: "it-IT", //lingua
                 }
             })
             .then((res) => {
-                console.log(res.data.cast);
+                const results = res.data.cast; //salvo i risultati della ricerca
+                //Ciclo
+                for (let i = 0; i < results.length; i++) {
+                    cast.push(results[i].name); //salvo il nome dell'attore
+                }
             });
+            return cast; //restituisco il cast
         },
         //Metodo per convertire il voto medio in stelle
         parseStars(vote) {
@@ -210,7 +218,6 @@ export default {
     //Created
     created() {
         this.fetchGenres(); //cerco i generi
-        this.fetchCastMovie();
     }
 }
 </script>
