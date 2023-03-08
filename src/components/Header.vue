@@ -17,7 +17,7 @@ export default {
         fetchMoviesAndTVs() {
             this.store.listSearch = []; //azzero la lista di film e serie tv
             this.fetchMovies(); //cerco i film
-            //this.fetchTVs(); //cerco le serie tv
+            this.fetchTVs(); //cerco le serie tv
         },
         //Metodo per cercare i film
         fetchMovies() {
@@ -74,6 +74,8 @@ export default {
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine della serie tv
                         overview: results[i].overview, //trama della serie tv
                         genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "tv"), //id dei generi
+                        id: results[i].id, //id del film
+                        cast: this.fetchCastTV(results[i].id), //cast
                     };
                     this.store.listSearch.push(tv); //inserisco la serie tv dentro la lista della ricerca
                 }
@@ -118,6 +120,25 @@ export default {
             let cast = []; //array che contiene il cast
             //Effettuo la chiamata all'API
             axios.get("https://api.themoviedb.org/3/movie/" + movie_id + "/credits?api_key=4cb5867956b2d28be2e1ac26f742a720", {
+                //Parametri
+                params: {
+                    language: "it-IT", //lingua
+                }
+            })
+            .then((res) => {
+                const results = res.data.cast; //salvo i risultati della ricerca
+                //Ciclo
+                for (let i = 0; i < results.length; i++) {
+                    cast.push(results[i].name); //salvo il nome dell'attore
+                }
+            });
+            return cast; //restituisco il cast
+        },
+        //Metodo per cercare il cast delle serie tv
+        fetchCastTV(tv_id) {
+            let cast = []; //array che contiene il cast
+            //Effettuo la chiamata all'API
+            axios.get("https://api.themoviedb.org/3/tv/" + tv_id + "/credits?api_key=4cb5867956b2d28be2e1ac26f742a720", {
                 //Parametri
                 params: {
                     language: "it-IT", //lingua
