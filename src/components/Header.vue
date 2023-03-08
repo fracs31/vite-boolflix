@@ -8,6 +8,7 @@ export default {
     data() {
         return {
             search: "", //ricerca
+            genre: "", //genere
             store, //store
         }
     },
@@ -171,6 +172,10 @@ export default {
             });
             return cast; //restituisco il cast
         },
+        //Filtro per genere
+        filterByGenre() {
+            console.log(this.genre);
+        },
         //Metodo per convertire il voto medio in stelle
         parseStars(vote) {
             const number = Math.ceil(vote); //arrotondo per eccesso il voto
@@ -254,7 +259,7 @@ export default {
         <!-- Barra di ricerca -->
         <div class="search">
             <!-- Filtro per genere -->
-            <select class="genre">
+            <select class="genre" v-model="genre" v-on:change="filterByGenre()">
                 <!-- Opzione -->
                 <option value="">--Genere--</option>
                 <!-- Opzione -->
