@@ -41,7 +41,18 @@ export default {
                         vote_average: this.parseStars(results[i].vote_average), //voto medio del film
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine del film
                         overview: results[i].overview, //trama del film
+                        genre_ids: results[i].genre_ids, //id dei generi
                     };
+                    //Ciclo
+                    for (let i = 0; i < movie.genre_ids.length; i++) {
+                        //Ciclo
+                        for (let j = 0; j < this.store.listGenresMovies.length; j++) {
+                            //Se l'id del genere del film è uguale all'id presente nella lista dei generi
+                            if (movie.genre_ids[i] == this.store.listGenresMovies[j].id) {
+                                movie.genre_ids[i] = this.store.listGenresMovies[j].name; //cambio l'id con il suo nome effettivo
+                            }
+                        }
+                    }
                     this.store.listSearch.push(movie); //inserisco il film dentro la lista della ricerca
                 }
                 console.log(results); //stampo i risultati della ricerca
@@ -70,11 +81,45 @@ export default {
                         vote_average: this.parseStars(results[i].vote_average), //voto medio della serie tv
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine della serie tv
                         overview: results[i].overview, //trama della serie tv
+                        genre_ids: results[i].genre_ids, //id dei generi
                     };
+                    //Ciclo
+                    for (let i = 0; i < tv.genre_ids.length; i++) {
+                        //Ciclo
+                        for (let j = 0; j < this.store.listGenresTVs.length; j++) {
+                            //Se l'id del genere della serie tv è uguale all'id presente nella lista dei generi
+                            if (tv.genre_ids[i] == this.store.listGenresTVs[j].id) {
+                                tv.genre_ids[i] = this.store.listGenresTVs[j].name; //cambio l'id con il suo nome effettivo
+                            }
+                        }
+                    }
                     this.store.listSearch.push(tv); //inserisco la serie tv dentro la lista della ricerca
                 }
                 console.log(results); //stampo i risultati della ricerca
                 console.log(this.store.listSearch); //stampo la lista della ricerca
+            });
+        },
+        //Metodo per ottenere i generi dei film e delle serie tv
+        fetchGenres() {
+            this.fetchGenresMovies(); //cerco i generi dei film
+            this.fetchGenresTVs(); //cerco i generi delle serie tv
+        },
+        //Metodo per ottenere i generi dei film
+        fetchGenresMovies() {
+            //Effettuo la chiamata all'API
+            axios.get("https://api.themoviedb.org/3/genre/movie/list?api_key=4cb5867956b2d28be2e1ac26f742a720&language=it-IT")
+            .then((res) => {
+                this.store.listGenresMovies = res.data.genres; //salvo la lista dei generi
+                console.log(this.store.listGenresMovies); //stampo la lista dei generi
+            });
+        },
+        //Metodo per ottenere i generi delle serie tv
+        fetchGenresTVs() {
+            //Effettuo la chiamata all'API
+            axios.get("https://api.themoviedb.org/3/genre/tv/list?api_key=4cb5867956b2d28be2e1ac26f742a720&language=it-IT")
+            .then((res) => {
+                this.store.listGenresTVs = res.data.genres; //salvo la lista dei generi
+                console.log(this.store.listGenresTVs); //stampo la lista dei generi
             });
         },
         //Metodo per convertire il voto medio in stelle
@@ -126,6 +171,10 @@ export default {
             }
             return stars; //restituisco il numero di stelle
         }
+    },
+    //Created
+    created() {
+        this.fetchGenres(); //cerco i generi
     }
 }
 </script>
@@ -153,7 +202,7 @@ export default {
     .main-header {
         flex-shrink: 0;
         background-color: black;
-        height: 100px;
+        height: 70px;
         padding: 20px;
         display: flex;
         justify-content: space-between;

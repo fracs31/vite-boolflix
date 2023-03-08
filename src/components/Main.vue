@@ -33,6 +33,7 @@ export default {
                     v-bind:original_title="element.original_title" 
                     v-bind:vote_average="element.vote_average" 
                     v-bind:overview="element.overview"
+                    v-bind:genre_ids="element.genre_ids"
                 >
                 </Card>
             </li>

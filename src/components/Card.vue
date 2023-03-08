@@ -9,6 +9,7 @@ export default {
         original_title: String,
         vote_average: Number,
         overview: String,
+        genre_ids: Object,
     }
 }
 </script>
@@ -43,6 +44,13 @@ export default {
             <!-- Trama -->
             <h3 class="overview">
                 Trama: {{ overview }}
+            </h3>
+            <!-- Generi -->
+            <h3 class="genres">
+                <!-- Genere -->
+                <span class="genre" v-for="genre in genre_ids">
+                    {{ genre }}
+                </span>
             </h3>
         </div>
     </div>
@@ -100,5 +108,8 @@ export default {
     /* Stella */
     .star {
         color: yellow;
+    }
+    .genre {
+        margin-right: 10px;
     }
 </style>
