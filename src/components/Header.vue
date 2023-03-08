@@ -46,10 +46,10 @@ export default {
                     //Ciclo
                     for (let i = 0; i < movie.genre_ids.length; i++) {
                         //Ciclo
-                        for (let j = 0; j < this.store.listGenresMovies.length; j++) {
+                        for (let j = 0; j < this.store.listGenres.movie.length; j++) {
                             //Se l'id del genere del film è uguale all'id presente nella lista dei generi
-                            if (movie.genre_ids[i] == this.store.listGenresMovies[j].id) {
-                                movie.genre_ids[i] = this.store.listGenresMovies[j].name; //cambio l'id con il suo nome effettivo
+                            if (movie.genre_ids[i] == this.store.listGenres.movie[j].id) {
+                                movie.genre_ids[i] = this.store.listGenres.movie[j].name; //cambio l'id con il suo nome effettivo
                             }
                         }
                     }
@@ -86,10 +86,10 @@ export default {
                     //Ciclo
                     for (let i = 0; i < tv.genre_ids.length; i++) {
                         //Ciclo
-                        for (let j = 0; j < this.store.listGenresTVs.length; j++) {
+                        for (let j = 0; j < this.store.listGenres.tv.length; j++) {
                             //Se l'id del genere della serie tv è uguale all'id presente nella lista dei generi
-                            if (tv.genre_ids[i] == this.store.listGenresTVs[j].id) {
-                                tv.genre_ids[i] = this.store.listGenresTVs[j].name; //cambio l'id con il suo nome effettivo
+                            if (tv.genre_ids[i] == this.store.listGenres.tv[j].id) {
+                                tv.genre_ids[i] = this.store.listGenres.tv[j].name; //cambio l'id con il suo nome effettivo
                             }
                         }
                     }
@@ -103,14 +103,14 @@ export default {
         fetchGenres() {
             this.fetchGenresMovies(); //cerco i generi dei film
             this.fetchGenresTVs(); //cerco i generi delle serie tv
+            console.log(this.store.listGenres);
         },
         //Metodo per ottenere i generi dei film
         fetchGenresMovies() {
             //Effettuo la chiamata all'API
             axios.get("https://api.themoviedb.org/3/genre/movie/list?api_key=4cb5867956b2d28be2e1ac26f742a720&language=it-IT")
             .then((res) => {
-                this.store.listGenresMovies = res.data.genres; //salvo la lista dei generi
-                console.log(this.store.listGenresMovies); //stampo la lista dei generi
+                this.store.listGenres.movie = res.data.genres; //salvo la lista dei generi
             });
         },
         //Metodo per ottenere i generi delle serie tv
@@ -118,8 +118,7 @@ export default {
             //Effettuo la chiamata all'API
             axios.get("https://api.themoviedb.org/3/genre/tv/list?api_key=4cb5867956b2d28be2e1ac26f742a720&language=it-IT")
             .then((res) => {
-                this.store.listGenresTVs = res.data.genres; //salvo la lista dei generi
-                console.log(this.store.listGenresTVs); //stampo la lista dei generi
+                this.store.listGenres.tv = res.data.genres; //salvo la lista dei generi
             });
         },
         //Metodo per convertire il voto medio in stelle
