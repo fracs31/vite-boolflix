@@ -256,15 +256,26 @@ export default {
             <!-- Immagine -->
             <img class="logo__img" src="../assets/img/logo.png" alt="Logo">
         </div>
+        <!-- Navbar -->
+        <nav class="navbar">
+            <!-- Lista -->
+            <ul class="navbar__list">
+                <!-- Home -->
+                <li class="navbar__list-item active">
+                    Home
+                </li>
+                <!-- Film -->
+                <li class="navbar__list-item">
+                    Film
+                </li>
+                <!-- Home -->
+                <li class="navbar__list-item">
+                    Serie TV
+                </li>
+            </ul>
+        </nav>
         <!-- Barra di ricerca -->
         <div class="search">
-            <!-- Filtro per genere -->
-            <select class="genre" v-model="genre" v-on:change="filterByGenre()">
-                <!-- Opzione -->
-                <option value="">--Genere--</option>
-                <!-- Opzione -->
-                <option v-for="(genre) in this.store.listGenres" v-bind:value="genre.name">{{ genre.name }}</option>
-            </select>
             <!-- Input -->
             <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTVs()">
         </div>
@@ -280,13 +291,34 @@ export default {
         height: 70px;
         padding: 20px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        gap: 20px;
     }
     /* Immagine usata come logo */
     .logo__img {
         width: 150px;
         object-fit: cover;
+    }
+    /* Navbar */
+    .navbar {
+        flex-grow: 1;
+    }
+    .navbar__list {
+        color: white;
+        display: flex;
+        gap: 20px;
+    }
+    /* Elementi della lista della Navbar */
+    .navbar__list-item {
+        cursor: pointer;
+    }
+    /* Hover degli elementi della lista della Navbar */
+    .navbar__list-item:hover {
+        color: #adb5bd;
+    }
+    /* Active */
+    .active.navbar__list-item {
+        color: #adb5bd;
     }
     /* Input */
     .search__input {
