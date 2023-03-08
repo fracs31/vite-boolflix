@@ -147,7 +147,7 @@ export default {
             .then((res) => {
                 const results = res.data.cast; //salvo i risultati della ricerca
                 //Ciclo
-                for (let i = 0; i < results.length; i++) {
+                for (let i = 0; i < 5; i++) {
                     cast.push(results[i].name); //salvo il nome dell'attore
                 }
             });
@@ -166,7 +166,7 @@ export default {
             .then((res) => {
                 const results = res.data.cast; //salvo i risultati della ricerca
                 //Ciclo
-                for (let i = 0; i < results.length; i++) {
+                for (let i = 0; i < 5; i++) {
                     cast.push(results[i].name); //salvo il nome dell'attore
                 }
             });

@@ -38,7 +38,7 @@ export default {
             <h3 class="vote">
                 Voto:
                 <!-- Stelle -->
-                <span class="star" v-for="star in vote_average">
+                <span class="star" v-for="(star) in vote_average">
                     <i class="fa-solid fa-star"></i>
                 </span>
             </h3>
@@ -49,14 +49,14 @@ export default {
             <!-- Generi -->
             <h3 class="genres">
                 <!-- Genere -->
-                <span class="genre" v-for="genre in genre_ids">
+                <span class="genre" v-for="(genre) in genre_ids">
                     {{ genre }}
                 </span>
             </h3>
             <!-- Cast -->
             <h3 class="cast">
                 <!-- Attore -->
-                <span class="actor" v-for="actor in cast">
+                <span class="actor" v-for="(actor) in cast">
                     {{ actor }}
                 </span>
             </h3>
