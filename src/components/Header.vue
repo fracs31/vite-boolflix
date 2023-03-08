@@ -99,7 +99,16 @@ export default {
                 }
             })
             .then((res) => {
-                this.store.listGenres.movie = res.data.genres; //salvo la lista dei generi
+                const results = res.data.genres; //salvo il risultati della ricerca
+                //Ciclo
+                for (let i = 0; i < results.length; i++) {
+                    //Genere
+                    let genre = {
+                        id: results[i].id, //id del genere
+                        name: results[i].name, //nome del genere
+                    };
+                    this.store.listGenres.push(genre); //insrisco il genere dentro la lista dei generi
+                }
             });
         },
         //Metodo per ottenere i generi delle serie tv
@@ -112,7 +121,16 @@ export default {
                 }
             })
             .then((res) => {
-                this.store.listGenres.tv = res.data.genres; //salvo la lista dei generi
+                const results = res.data.genres; //salvo il risultati della ricerca
+                //Ciclo
+                for (let i = 0; i < results.length; i++) {
+                    //Genere
+                    let genre = {
+                        id: results[i].id, //id del genere
+                        name: results[i].name, //nome del genere
+                    };
+                    this.store.listGenres.push(genre); //insrisco il genere dentro la lista dei generi
+                }
             });
         },
         //Metodo per cercare il cast dei film
@@ -203,35 +221,16 @@ export default {
             return stars; //restituisco il numero di stelle
         },
         //Metodo per convertire da id del genere a nome del genere
-        parseGenreFromIdToName(ids, media_type) {
-            //Switch
-            switch (media_type) {
-                //Caso film
-                case "movie":
-                    //Ciclo
-                    for (let i = 0; i < ids.length; i++) {
-                        //Ciclo
-                        for (let j = 0; j < this.store.listGenres.movie.length; j++) {
-                            //Se l'id del genere del film è uguale all'id presente nella lista dei generi
-                            if (ids[i] == this.store.listGenres.movie[j].id) {
-                                ids[i] = this.store.listGenres.movie[j].name; //cambio l'id con il suo nome effettivo
-                            }
-                        }
+        parseGenreFromIdToName(ids) {
+            //Ciclo
+            for (let i = 0; i < ids.length; i++) {
+                //Ciclo
+                for (let j = 0; j < this.store.listGenres.length; j++) {
+                    //Se l'id del genere del film è uguale all'id presente nella lista dei generi
+                    if (ids[i] == this.store.listGenres[j].id) {
+                        ids[i] = this.store.listGenres[j].name; //cambio l'id con il suo nome effettivo
                     }
-                    break; //break
-                //Caso tv
-                case "tv":
-                    //Ciclo
-                    for (let i = 0; i < ids.length; i++) {
-                        //Ciclo
-                        for (let j = 0; j < this.store.listGenres.tv.length; j++) {
-                            //Se l'id del genere della serie tv è uguale all'id presente nella lista dei generi
-                            if (ids[i] == this.store.listGenres.tv[j].id) {
-                                ids[i] = this.store.listGenres.tv[j].name; //cambio l'id con il suo nome effettivo
-                            }
-                        }
-                    }
-                    break; //break
+                }
             }
             return ids; //restituisco gli id converiti
         }
@@ -254,6 +253,13 @@ export default {
         </div>
         <!-- Barra di ricerca -->
         <div class="search">
+            <!-- Filtro per genere -->
+            <select class="genre">
+                <!-- Opzione -->
+                <option value="">--Genere--</option>
+                <!-- Opzione -->
+                <option v-for="(genre) in this.store.listGenres" v-bind:value="genre.name">{{ genre.name }}</option>
+            </select>
             <!-- Input -->
             <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTVs()">
         </div>
