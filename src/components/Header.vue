@@ -88,7 +88,12 @@ export default {
         //Metodo per ottenere i generi dei film
         fetchGenresMovies() {
             //Effettuo la chiamata all'API
-            axios.get("https://api.themoviedb.org/3/genre/movie/list?api_key=4cb5867956b2d28be2e1ac26f742a720&language=it-IT")
+            axios.get("https://api.themoviedb.org/3/genre/movie/list?api_key=4cb5867956b2d28be2e1ac26f742a720", {
+                //Parametri
+                params: {
+                    language: "it-IT", //lingua
+                }
+            })
             .then((res) => {
                 this.store.listGenres.movie = res.data.genres; //salvo la lista dei generi
             });
@@ -96,9 +101,27 @@ export default {
         //Metodo per ottenere i generi delle serie tv
         fetchGenresTVs() {
             //Effettuo la chiamata all'API
-            axios.get("https://api.themoviedb.org/3/genre/tv/list?api_key=4cb5867956b2d28be2e1ac26f742a720&language=it-IT")
+            axios.get("https://api.themoviedb.org/3/genre/tv/list?api_key=4cb5867956b2d28be2e1ac26f742a720", {
+                //Parametri
+                params: {
+                    language: "it-IT", //lingua
+                }
+            })
             .then((res) => {
                 this.store.listGenres.tv = res.data.genres; //salvo la lista dei generi
+            });
+        },
+        //Metodo per cercare il cast dei film
+        fetchCastMovie() {
+            //Effettuo la chiamata all'API
+            axios.get("https://api.themoviedb.org/3/movie/105/credits?api_key=4cb5867956b2d28be2e1ac26f742a720", {
+                //Parametri
+                params: {
+                    language: "it-IT", //lingua
+                }
+            })
+            .then((res) => {
+                console.log(res.data.cast);
             });
         },
         //Metodo per convertire il voto medio in stelle
@@ -151,9 +174,9 @@ export default {
             return stars; //restituisco il numero di stelle
         },
         //Metodo per convertire da id del genere a nome del genere
-        parseGenreFromIdToName(ids, type) {
+        parseGenreFromIdToName(ids, media_type) {
             //Switch
-            switch (type) {
+            switch (media_type) {
                 //Caso film
                 case "movie":
                     //Ciclo
@@ -187,6 +210,7 @@ export default {
     //Created
     created() {
         this.fetchGenres(); //cerco i generi
+        this.fetchCastMovie();
     }
 }
 </script>
