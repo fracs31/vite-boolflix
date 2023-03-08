@@ -41,22 +41,12 @@ export default {
                         vote_average: this.parseStars(results[i].vote_average), //voto medio del film
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine del film
                         overview: results[i].overview, //trama del film
-                        genre_ids: results[i].genre_ids, //id dei generi
+                        genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "movie"), //id dei generi
                     };
-                    //Ciclo
-                    for (let i = 0; i < movie.genre_ids.length; i++) {
-                        //Ciclo
-                        for (let j = 0; j < this.store.listGenres.movie.length; j++) {
-                            //Se l'id del genere del film è uguale all'id presente nella lista dei generi
-                            if (movie.genre_ids[i] == this.store.listGenres.movie[j].id) {
-                                movie.genre_ids[i] = this.store.listGenres.movie[j].name; //cambio l'id con il suo nome effettivo
-                            }
-                        }
-                    }
                     this.store.listSearch.push(movie); //inserisco il film dentro la lista della ricerca
                 }
-                console.log(results); //stampo i risultati della ricerca
-                console.log(this.store.listSearch); //stampo la lista della ricerca
+                console.log("Results: ", results); //stampo i risultati della ricerca
+                console.log("Lista: ", this.store.listSearch); //stampo la lista della ricerca
             });
         },
         //Metodo per cercare le serie tv
@@ -81,29 +71,19 @@ export default {
                         vote_average: this.parseStars(results[i].vote_average), //voto medio della serie tv
                         poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine della serie tv
                         overview: results[i].overview, //trama della serie tv
-                        genre_ids: results[i].genre_ids, //id dei generi
+                        genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "tv"), //id dei generi
                     };
-                    //Ciclo
-                    for (let i = 0; i < tv.genre_ids.length; i++) {
-                        //Ciclo
-                        for (let j = 0; j < this.store.listGenres.tv.length; j++) {
-                            //Se l'id del genere della serie tv è uguale all'id presente nella lista dei generi
-                            if (tv.genre_ids[i] == this.store.listGenres.tv[j].id) {
-                                tv.genre_ids[i] = this.store.listGenres.tv[j].name; //cambio l'id con il suo nome effettivo
-                            }
-                        }
-                    }
                     this.store.listSearch.push(tv); //inserisco la serie tv dentro la lista della ricerca
                 }
-                console.log(results); //stampo i risultati della ricerca
-                console.log(this.store.listSearch); //stampo la lista della ricerca
+                console.log("Results: ", results); //stampo i risultati della ricerca
+                console.log("Lista: ", this.store.listSearch); //stampo la lista della ricerca
             });
         },
         //Metodo per ottenere i generi dei film e delle serie tv
         fetchGenres() {
             this.fetchGenresMovies(); //cerco i generi dei film
             this.fetchGenresTVs(); //cerco i generi delle serie tv
-            console.log(this.store.listGenres);
+            console.log("Generi: ", this.store.listGenres); //stampo la lista dei generi
         },
         //Metodo per ottenere i generi dei film
         fetchGenresMovies() {
@@ -169,6 +149,39 @@ export default {
                     break; //break
             }
             return stars; //restituisco il numero di stelle
+        },
+        //Metodo per convertire da id del genere a nome del genere
+        parseGenreFromIdToName(ids, type) {
+            //Switch
+            switch (type) {
+                //Caso film
+                case "movie":
+                    //Ciclo
+                    for (let i = 0; i < ids.length; i++) {
+                        //Ciclo
+                        for (let j = 0; j < this.store.listGenres.movie.length; j++) {
+                            //Se l'id del genere del film è uguale all'id presente nella lista dei generi
+                            if (ids[i] == this.store.listGenres.movie[j].id) {
+                                ids[i] = this.store.listGenres.movie[j].name; //cambio l'id con il suo nome effettivo
+                            }
+                        }
+                    }
+                    break; //break
+                //Caso tv
+                case "tv":
+                    //Ciclo
+                    for (let i = 0; i < ids.length; i++) {
+                        //Ciclo
+                        for (let j = 0; j < this.store.listGenres.tv.length; j++) {
+                            //Se l'id del genere della serie tv è uguale all'id presente nella lista dei generi
+                            if (ids[i] == this.store.listGenres.tv[j].id) {
+                                ids[i] = this.store.listGenres.tv[j].name; //cambio l'id con il suo nome effettivo
+                            }
+                        }
+                    }
+                    break; //break
+            }
+            return ids; //restituisco gli id converiti
         }
     },
     //Created
