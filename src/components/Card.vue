@@ -66,6 +66,7 @@ export default {
     .card__img--img {
         width: 100%;
         height: 100%;
+        display: block;
         object-fit: cover;
         object-position: top;
     }
