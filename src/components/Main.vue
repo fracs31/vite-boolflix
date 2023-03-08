@@ -12,7 +12,7 @@ export default {
     //Dati
     data() {
         return {
-            store, //stpre
+            store, //store
         }
     }
 }

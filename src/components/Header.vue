@@ -14,10 +14,10 @@ export default {
     //Metodi
     methods: {
         //Metodo per cercare sia i film sia le serie tv 
-        fetchMoviesAndTV() {
+        fetchMoviesAndTVs() {
             this.store.listSearch = []; //azzero la lista di film e serie tv
             this.fetchMovies(); //cerco i film
-            this.fetchTV(); //cerco le serie tv
+            this.fetchTVs(); //cerco le serie tv
         },
         //Metodo per cercare i film
         fetchMovies() {
@@ -49,7 +49,7 @@ export default {
             });
         },
         //Metodo per cercare le serie tv
-        fetchTV() {
+        fetchTVs() {
             //Effettuo la chiamata all'API
             axios.get("https://api.themoviedb.org/3/search/tv?api_key=4cb5867956b2d28be2e1ac26f742a720", {
                 //Parametri
@@ -142,7 +142,7 @@ export default {
         <!-- Barra di ricerca -->
         <div class="search">
             <!-- Input -->
-            <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTV()">
+            <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTVs()">
         </div>
     </header>
 </template>
