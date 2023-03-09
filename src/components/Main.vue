@@ -30,7 +30,8 @@ export default {
                 <Card 
                     v-bind:poster_path="element.poster_path" 
                     v-bind:title="element.title" 
-                    v-bind:original_title="element.original_title" 
+                    v-bind:original_title="element.original_title"
+                    v-bind:original_language="element.original_language" 
                     v-bind:vote_average="element.vote_average" 
                     v-bind:overview="element.overview"
                     v-bind:genre_ids="element.genre_ids"

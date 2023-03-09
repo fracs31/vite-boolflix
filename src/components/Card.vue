@@ -7,10 +7,39 @@ export default {
         poster_path: String, //immagine
         title: String, //titolo
         original_title: String, //titolo originale
+        original_language: String, //lingua originale
         vote_average: Number, //voto
         overview: String, //trama
         genre_ids: Array, //generi
         cast: Array, //cast
+    },
+    //Data
+    data() {
+        return {
+            //Bandiere
+            flags: [
+                {
+                    name: "en", //nome del paese
+                    imgSrc: "../src/assets/img/united-states.png", //immagine della bandiera
+                },
+                {
+                    name: "it", //nome del paese
+                    imgSrc: "../src/assets/img/italy.png", //immagine della bandiera
+                },
+                {
+                    name: "fr", //nome del paese
+                    imgSrc: "../src/assets/img/france.png", //immagine della bandiera
+                },
+                {
+                    name: "es", //nome del paese
+                    imgSrc: "../src/assets/img/spain.png", //immagine della bandiera
+                },
+                {
+                    name: "ja", //nome del paese
+                    imgSrc: "../src/assets/img/japan.png", //immagine della bandiera
+                },
+            ]
+        }
     }
 }
 </script>
@@ -36,6 +65,11 @@ export default {
                 <h2 class="original-title">
                     {{ original_title }}
                 </h2>
+            </div>
+            <!-- Paese -->
+            <div class="country">
+                <!-- Immagine -->
+                <img class="country__img" v-bind:alt="original_language">
             </div>
             <!-- Generi -->
             <div class="genres">
@@ -97,7 +131,7 @@ export default {
         padding: 15px;
         display: none;
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         position: absolute;
         top: 0px;
         left: 0px;
@@ -116,6 +150,10 @@ export default {
     .original-title {
         font-size: 16px;
         font-weight: normal;
+    }
+    .country__img {
+        width: 15px;
+        aspect-ratio: 1/1;
     }
     /*
         Generi
