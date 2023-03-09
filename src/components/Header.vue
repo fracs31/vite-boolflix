@@ -1,4 +1,4 @@
-<!-- JavaScript -->
+o<!-- JavaScript -->
 <script>
 import axios from "axios"; //importo axios
 import store from "../store.js"; //importo lo store
@@ -50,6 +50,10 @@ export default {
                 }
                 console.log("Results: ", results); //stampo i risultati della ricerca
                 console.log("Lista: ", this.store.listSearch); //stampo la lista della ricerca
+                //Se il filtro non è vuoto
+                if (this.genre != "") {
+                    this.filterByGenre(); //filtro gli elementi della ricerca
+                }
             });
         },
         //Metodo per cercare le serie tv
@@ -82,6 +86,10 @@ export default {
                 }
                 console.log("Results: ", results); //stampo i risultati della ricerca
                 console.log("Lista: ", this.store.listSearch); //stampo la lista della ricerca
+                //Se il filtro non è vuoto
+                if (this.genre != "") {
+                    this.filterByGenre(); //filtro gli elementi della ricerca
+                }
             });
         },
         //Metodo per ottenere i generi dei film e delle serie tv
@@ -174,7 +182,15 @@ export default {
         },
         //Filtro per genere
         filterByGenre() {
-            console.log(this.genre);
+            let filter = []; //elementi filtrati
+            //Ciclo
+            for (let i = 0; i < this.store.listSearch.length; i++) {
+                //Se nella lista della ricerca sono presenti degli elementi con lo stesso genere del filtro
+                if (this.store.listSearch[i].genre_ids.includes(this.genre)) {
+                    filter.push(this.store.listSearch[i]); //salvo l'elemento con lo stesso genere del filtro
+                }
+            }
+            this.store.listSearch = filter; //assegno alla lista della ricerca gli elementi filtrati
         },
         //Metodo per convertire il voto medio in stelle
         parseStars(vote) {
@@ -276,6 +292,13 @@ export default {
         </nav>
         <!-- Barra di ricerca -->
         <div class="search">
+            <!-- Filtro per genere -->
+            <select v-model="genre" v-on:change="fetchMoviesAndTVs()">
+                <!-- Opzione -->
+                <option value="">Genere</option>
+                <!-- Opzione -->
+                <option v-for="genre in store.listGenres" v-bind:value="genre.name">{{ genre.name }}</option>
+            </select>
             <!-- Input -->
             <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTVs()">
         </div>
