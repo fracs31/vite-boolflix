@@ -115,6 +115,7 @@ export default {
     /* Titolo originale */
     .original-title {
         font-size: 16px;
+        font-weight: normal;
     }
     /*
         Generi
