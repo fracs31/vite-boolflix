@@ -68,8 +68,10 @@ export default {
             </div>
             <!-- Paese -->
             <div class="country">
-                <!-- Immagine -->
-                <img class="country__img" v-bind:alt="original_language">
+                <template v-for="(flag) in flags">
+                    <!-- Immagine -->
+                    <img v-if="(original_language == flag.name)" class="country__img" v-bind:src="(original_language == flag.name) ? flag.imgSrc : ''" v-bind:alt="original_language">
+                </template>
             </div>
             <!-- Generi -->
             <div class="genres">
