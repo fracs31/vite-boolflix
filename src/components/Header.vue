@@ -326,7 +326,7 @@ export default {
                 <option class="option" v-for="genre in store.listGenres" v-bind:value="genre.name">{{ genre.name.toUpperCase() }}</option>
             </select>
             <!-- Input -->
-            <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTVs()">
+            <input class="search__input" type="text" placeholder="Cerca un film o una serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTVs()">
         </div>
     </header>
 </template>

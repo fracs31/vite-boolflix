@@ -19,47 +19,51 @@ export default {
 <template>
     <!-- Carta -->
     <div class="card">
-        <!-- Immagine della carta -->
-        <div class="card__img">
+        <!-- Poster della carta -->
+        <div class="card__poster">
             <!-- Immagine -->
-            <img class="card__img--img" v-bind:src="poster_path" v-bind:alt="title">
+            <img class="card__poster--img" v-bind:src="poster_path" v-bind:alt="title">
         </div>
         <!-- Descrizione della carta -->
         <div class="card__description">
-            <!-- Titolo -->
-            <h1 class="title">
-                {{ title }}
-            </h1>
-            <!-- Titolo originale -->
-            <h2 class="original-title">
-                Titolo originale: {{ original_title }}
-            </h2>
+            <!-- Titoli -->
+            <div class="titles">
+                <!-- Titolo -->
+                <h1 class="title">
+                    {{ title }}
+                </h1>
+                <!-- Titolo originale -->
+                <h2 class="original-title">
+                    {{ original_title }}
+                </h2>
+            </div>
+            <!-- Generi -->
+            <div class="genres">
+                Genere:
+                <!-- Genere -->
+                <span class="genre" v-for="(genre) in genre_ids">
+                    {{ genre }},
+                </span>
+            </div>
+            <!-- Cast -->
+            <div class="cast">
+                Cast:
+                <!-- Attore -->
+                <span class="actor" v-for="(actor) in cast">
+                    {{ actor }},
+                </span>
+            </div>
             <!-- Voto -->
-            <h3 class="vote">
-                Voto:
-                <!-- Stelle -->
+            <div class="vote">
+                <!-- Stella -->
                 <span class="star" v-for="(star) in vote_average">
                     <i class="fa-solid fa-star"></i>
                 </span>
-            </h3>
+            </div>
             <!-- Trama -->
-            <h3 class="overview">
-                Trama: {{ overview }}
-            </h3>
-            <!-- Generi -->
-            <h3 class="genres">
-                <!-- Genere -->
-                <span class="genre" v-for="(genre) in genre_ids">
-                    {{ genre }}
-                </span>
-            </h3>
-            <!-- Cast -->
-            <h3 class="cast">
-                <!-- Attore -->
-                <span class="actor" v-for="(actor) in cast">
-                    {{ actor }}
-                </span>
-            </h3>
+            <div class="overview">
+                {{ overview }}
+            </div>
         </div>
     </div>
 </template>
@@ -68,56 +72,64 @@ export default {
 <style scoped>
     /* Carta */
     .card {
-        color: white;
         height: 500px;
-        position: relative;
+        overflow-y: auto;
         cursor: pointer;
+        position: relative;
     }
-    /* Immagine della carta */
-    .card__img {
+    /* Poster della carta */
+    .card__poster {
         width: 100%;
         height: 100%;
     }
-    /* Immagine utilizzata */
-    .card__img--img {
+    /* Immagine */
+    .card__poster--img {
         width: 100%;
         height: 100%;
-        display: block;
         object-fit: cover;
         object-position: top;
+        display: block;
     }
     /* Descrizione della carta */
     .card__description {
         width: 100%;
         height: 100%;
-        font-size: 12px;
-        padding: 20px;
-        background-color: rgba(0, 0, 0, 0.8);
-        overflow-y: auto;
+        padding: 15px;
+        display: none;
+        flex-direction: column;
+        gap: 15px;
         position: absolute;
         top: 0px;
         left: 0px;
-        display: none;
-        flex-direction: column;
-        gap: 10px;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: white;
     }
     /* Hover della carta */
     .card:hover .card__description {
         display: flex;
     }
-    /* Titoli presenti nella carta */
-    .title, 
-    .original-title,
-    .vote,
-    .overview {
-        font-weight: normal;
+    /* Titolo */
+    .title {
+        font-size: 28px;
     }
-
+    /* Titolo originale */
+    .original-title {
+        font-size: 16px;
+    }
+    /*
+        Generi
+        Cast 
+    */
+    .genres,
+    .cast {
+        font-size: 14px;
+    }
+    /* Voto */
+    .vote {
+        text-align: right;
+    }
     /* Stella */
     .star {
-        color: yellow;
-    }
-    .genre {
-        margin-right: 10px;
+        color: #ffc300;
     }
 </style>
