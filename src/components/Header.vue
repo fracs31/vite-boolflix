@@ -116,7 +116,20 @@ export default {
                         id: results[i].id, //id del genere
                         name: results[i].name, //nome del genere
                     };
-                    this.store.listGenres.push(genre); //insrisco il genere dentro la lista dei generi
+                    this.store.listGenres.push(genre); //inserisco il genere dentro la lista dei generi
+                }
+                //Ciclo
+                for (let i = 0; i < this.store.listGenres.length; i++) {
+                    //Ciclo
+                    for (let j = 0; j < this.store.listGenres.length; j++) {
+                        //Se gli indici sono diversi
+                        if (i != j) {
+                            //Se il genere è già presente dentro la lista
+                            if (this.store.listGenres[i].id == this.store.listGenres[j].id) {
+                                this.store.listGenres.splice(j, 1); //cancello il duplicato
+                            }
+                        }
+                    }
                 }
             });
         },
@@ -138,7 +151,20 @@ export default {
                         id: results[i].id, //id del genere
                         name: results[i].name, //nome del genere
                     };
-                    this.store.listGenres.push(genre); //insrisco il genere dentro la lista dei generi
+                    this.store.listGenres.push(genre); //inserisco il genere dentro la lista dei generi
+                }
+                //Ciclo
+                for (let i = 0; i < this.store.listGenres.length; i++) {
+                    //Ciclo
+                    for (let j = 0; j < this.store.listGenres.length; j++) {
+                        //Se gli indici sono diversi
+                        if (i != j) {
+                            //Se il genere è già presente dentro la lista
+                            if (this.store.listGenres[i].id == this.store.listGenres[j].id) {
+                                this.store.listGenres.splice(j, 1); //cancello il duplicato
+                            }
+                        }
+                    }
                 }
             });
         },
@@ -293,11 +319,11 @@ export default {
         <!-- Barra di ricerca -->
         <div class="search">
             <!-- Filtro per genere -->
-            <select v-model="genre" v-on:change="fetchMoviesAndTVs()">
+            <select class="select" v-model="genre" v-on:change="fetchMoviesAndTVs()">
                 <!-- Opzione -->
-                <option value="">Genere</option>
+                <option class="option" value="">Genere</option>
                 <!-- Opzione -->
-                <option v-for="genre in store.listGenres" v-bind:value="genre.name">{{ genre.name }}</option>
+                <option class="option" v-for="genre in store.listGenres" v-bind:value="genre.name">{{ genre.name.toUpperCase() }}</option>
             </select>
             <!-- Input -->
             <input class="search__input" type="text" placeholder="Cerca un film o serie tv" v-model="search" v-on:keyup.enter="fetchMoviesAndTVs()">
@@ -333,6 +359,7 @@ export default {
     }
     /* Elementi della lista della Navbar */
     .navbar__list-item {
+        font-size: 16px;
         cursor: pointer;
     }
     /* Hover degli elementi della lista della Navbar */
@@ -349,5 +376,22 @@ export default {
         width: 400px;
         height: 40px;
         padding: 0px 10px;
+    }
+    /* Select */
+    .select {
+        color: #adb5bd;
+        font-size: 16px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        margin-right: 30px;
+    }
+    /* Select in hover */
+    .select:hover {
+        color: white;
+    }
+    /* Opzioni della select */
+    .option {
+        color: black;
     }
 </style>
