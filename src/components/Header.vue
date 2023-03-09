@@ -304,7 +304,7 @@ export default {
         flex-grow: 1;
     }
     .navbar__list {
-        color: white;
+        color: #adb5bd;
         display: flex;
         gap: 20px;
     }
@@ -314,11 +314,11 @@ export default {
     }
     /* Hover degli elementi della lista della Navbar */
     .navbar__list-item:hover {
-        color: #adb5bd;
+        color: white;
     }
     /* Active */
     .active.navbar__list-item {
-        color: #adb5bd;
+        color: white;
     }
     /* Input */
     .search__input {
