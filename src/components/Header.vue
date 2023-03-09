@@ -36,6 +36,7 @@ export default {
                 for (let i = 0; i < results.length; i++) {
                     //Film
                     let movie = {
+                        media_type: "movie", //tipo di contenuto
                         title: results[i].title, //titolo del film
                         original_title: results[i].original_title, //titolo originale del film 
                         original_language: results[i].original_language, //lingua originale film
@@ -44,9 +45,16 @@ export default {
                         overview: results[i].overview, //trama del film
                         genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "movie"), //id dei generi
                         id: results[i].id, //id del film
-                        cast: this.fetchCastMovie(results[i].id), //cast
+                        cast: [], //cast
                     };
                     this.store.listSearch.push(movie); //inserisco il film dentro la lista della ricerca
+                }
+                //Ciclo
+                for (let i = 0; i < this.store.listSearch.length; i++) {
+                    //Se il contentuto della lista è un film
+                    if (this.store.listSearch[i].media_type == "movie") {
+                        this.fetchCastMovie(this.store.listSearch[i].id); //cerco il cast del film
+                    }
                 }
                 console.log("Results: ", results); //stampo i risultati della ricerca
                 console.log("Lista: ", this.store.listSearch); //stampo la lista della ricerca
@@ -72,6 +80,7 @@ export default {
                 for (let i = 0; i < results.length; i++) {
                     //Serie tv
                     let tv = {
+                        media_type: "tv", //tipo di contenuto
                         title: results[i].name, //nome della serie tv
                         original_title: results[i].original_name, //nome originale della serie tv
                         original_language: results[i].original_language, //lingua originale della serie tv
@@ -80,9 +89,16 @@ export default {
                         overview: results[i].overview, //trama della serie tv
                         genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "tv"), //id dei generi
                         id: results[i].id, //id del film
-                        cast: this.fetchCastTV(results[i].id), //cast
+                        cast: [], //cast
                     };
                     this.store.listSearch.push(tv); //inserisco la serie tv dentro la lista della ricerca
+                }
+                //Ciclo
+                for (let i = 0; i < this.store.listSearch.length; i++) {
+                    //Se il contenuto della lista è una serie tv
+                    if (this.store.listSearch[i].media_type == "tv") {
+                        this.fetchCastTV(this.store.listSearch[i].id); //cerco il cast del film
+                    }
                 }
                 console.log("Results: ", results); //stampo i risultati della ricerca
                 console.log("Lista: ", this.store.listSearch); //stampo la lista della ricerca
@@ -170,7 +186,6 @@ export default {
         },
         //Metodo per cercare il cast dei film
         fetchCastMovie(movie_id) {
-            let cast = []; //array che contiene il cast
             //Effettuo la chiamata all'API
             axios.get("https://api.themoviedb.org/3/movie/" + movie_id + "/credits?api_key=4cb5867956b2d28be2e1ac26f742a720", {
                 //Parametri
@@ -181,15 +196,19 @@ export default {
             .then((res) => {
                 const results = res.data.cast; //salvo i risultati della ricerca
                 //Ciclo
-                for (let i = 0; i < 5; i++) {
-                    cast.push(results[i].name); //salvo il nome dell'attore
+                for (let i = 0; i < this.store.listSearch.length; i++) {
+                    //Se l'id del film dentro la lista della ricerca coincide con l'id passato come parametro nell'API
+                    if (this.store.listSearch[i].id == movie_id) {
+                        //Ciclo
+                        for (let j = 0; j < 5; j++) {
+                            this.store.listSearch[i].cast.push(results[j].name); //salvo il cast
+                        }
+                    }
                 }
             });
-            return cast; //restituisco il cast
         },
         //Metodo per cercare il cast delle serie tv
         fetchCastTV(tv_id) {
-            let cast = []; //array che contiene il cast
             //Effettuo la chiamata all'API
             axios.get("https://api.themoviedb.org/3/tv/" + tv_id + "/credits?api_key=4cb5867956b2d28be2e1ac26f742a720", {
                 //Parametri
@@ -200,11 +219,16 @@ export default {
             .then((res) => {
                 const results = res.data.cast; //salvo i risultati della ricerca
                 //Ciclo
-                for (let i = 0; i < 5; i++) {
-                    cast.push(results[i].name); //salvo il nome dell'attore
+                for (let i = 0; i < this.store.listSearch.length; i++) {
+                    //Se l'id della serie tv dentro la lista della ricerca coincide con l'id passato come parametro nell'API
+                    if (this.store.listSearch[i].id == tv_id) {
+                        //Ciclo
+                        for (let j = 0; j < 5; j++) {
+                            this.store.listSearch[i].cast.push(results[j].name); //salvo il cast
+                        }
+                    }
                 }
             });
-            return cast; //restituisco il cast
         },
         //Filtro per genere
         filterByGenre() {
