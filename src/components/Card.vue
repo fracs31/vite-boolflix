@@ -13,36 +13,51 @@ export default {
         genre_ids: Array, //generi
         cast: Array, //cast
     },
-    //Data
-    data() {
-        return {
-            //Bandiere
-            flags: [
-                {
-                    name: "en", //nome del paese
-                    imgSrc: "../src/assets/img/united-states.png", //immagine della bandiera
-                },
-                {
-                    name: "it", //nome del paese
-                    imgSrc: "../src/assets/img/italy.png", //immagine della bandiera
-                },
-                {
-                    name: "fr", //nome del paese
-                    imgSrc: "../src/assets/img/france.png", //immagine della bandiera
-                },
-                {
-                    name: "es", //nome del paese
-                    imgSrc: "../src/assets/img/spain.png", //immagine della bandiera
-                },
-                {
-                    name: "ja", //nome del paese
-                    imgSrc: "../src/assets/img/japan.png", //immagine della bandiera
-                },
-            ]
-        }
-    },
     //Computed
     computed: {
+        //Metodo per restituire la bandiera del paese del film
+        getCountryFlag() {
+            let flag = ""; //bandiera
+            switch (this.original_language) {
+                //Inglese
+                case "en":
+                    flag = "../src/assets/img/united-states.png"; //bandiera americana
+                    break; //break
+                //Italia
+                case "it":
+                    flag = "../src/assets/img/italy.png"; //bandiera italiana
+                    break; //break
+                //Francia
+                case "fr":
+                    flag = "../src/assets/img/france.png"; //bandiera francese
+                    break; //break
+                //Spagna
+                case "es":
+                    flag = "../src/assets/img/spain.png"; //bandiera spagnola
+                    break; //break
+                //Germania
+                case "de":
+                    flag = "../src/assets/img/germany.png"; //bandiera tedesca
+                    break; //break
+                //Giappone
+                case "ja":
+                    flag = "../src/assets/img/japan.png"; //bandiera giapponese
+                    break; //break
+                //Cina
+                case "zh":
+                    flag = "../src/assets/img/china.png"; //bandiera cinese
+                    break; //break
+                //Corea del Sud
+                case "ko":
+                    flag = "../src/assets/img/south-korea.png"; //bandiera sud coreana
+                    break; //break
+                //Se il paese non viene riconosciuto
+                default:
+                    flag = "../src/assets/img/unknown-flag.png"; //bandiera placeholder
+                    break; //break
+            }
+            return flag; //restituisco la bandiera
+        },
         //Metodo per restituire l'url dell'immagine del fil o della serie tv
         getImgURL() {
             let url = ""; //url dell'immagine
@@ -82,10 +97,8 @@ export default {
             </div>
             <!-- Paese -->
             <div class="country">
-                <template v-for="(flag) in flags">
-                    <!-- Immagine -->
-                    <img v-if="(original_language == flag.name)" class="country__img" v-bind:src="(original_language == flag.name) ? flag.imgSrc : ''" v-bind:alt="original_language">
-                </template>
+                <!-- Immagine -->
+                <img class="country__img" v-bind:src="getCountryFlag" v-bind:alt="original_language">
             </div>
             <!-- Generi -->
             <div class="genres">
