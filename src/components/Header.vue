@@ -195,12 +195,17 @@ export default {
             })
             .then((res) => {
                 const results = res.data.cast; //salvo i risultati della ricerca
+                let maxCast = 5; //numero massimo di persone del cast da memorizzare
+                //Se il cast minore di 5
+                if (results.length < 5) {
+                    maxCast = results.length; //prenderò tutto il cast
+                }
                 //Ciclo
                 for (let i = 0; i < this.store.listSearch.length; i++) {
                     //Se l'id del film dentro la lista della ricerca coincide con l'id passato come parametro nell'API
                     if (this.store.listSearch[i].id == movie_id) {
                         //Ciclo
-                        for (let j = 0; j < 5; j++) {
+                        for (let j = 0; j < maxCast; j++) {
                             this.store.listSearch[i].cast.push(results[j].name); //salvo il cast
                         }
                     }
@@ -218,12 +223,17 @@ export default {
             })
             .then((res) => {
                 const results = res.data.cast; //salvo i risultati della ricerca
+                let maxCast = 5; //numero massimo di persone del cast da memorizzare
+                //Se il cast minore di 5
+                if (results.length < 5) {
+                    maxCast = results.length; //prenderò tutto il cast
+                }
                 //Ciclo
                 for (let i = 0; i < this.store.listSearch.length; i++) {
                     //Se l'id della serie tv dentro la lista della ricerca coincide con l'id passato come parametro nell'API
                     if (this.store.listSearch[i].id == tv_id) {
                         //Ciclo
-                        for (let j = 0; j < 5; j++) {
+                        for (let j = 0; j < maxCast; j++) {
                             this.store.listSearch[i].cast.push(results[j].name); //salvo il cast
                         }
                     }
