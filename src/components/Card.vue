@@ -40,6 +40,20 @@ export default {
                 },
             ]
         }
+    },
+    //Computed
+    computed: {
+        //Metodo per restituire l'url dell'immagine del fil o della serie tv
+        getImgURL() {
+            let url = ""; //url dell'immagine
+            //Se il film o la serie tv ha un'immagine
+            if (this.poster_path) {
+                url = "https://image.tmdb.org/t/p/w780" + this.poster_path; //creo l'url dell'immagine
+            } else { //altrimenti
+                url = "../src/assets/img/placeholder-img.png"; //utilizzo un placeholder come immagine
+            }
+            return url; //restituiso l'url
+        }
     }
 }
 </script>
@@ -51,7 +65,7 @@ export default {
         <!-- Poster della carta -->
         <div class="card__poster">
             <!-- Immagine -->
-            <img class="card__poster--img" v-bind:src="poster_path" v-bind:alt="title">
+            <img class="card__poster--img" v-bind:src="getImgURL" v-bind:alt="title">
         </div>
         <!-- Descrizione della carta -->
         <div class="card__description">

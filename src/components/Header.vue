@@ -1,4 +1,4 @@
-o<!-- JavaScript -->
+<!-- JavaScript -->
 <script>
 import axios from "axios"; //importo axios
 import store from "../store.js"; //importo lo store
@@ -41,7 +41,7 @@ export default {
                         original_title: results[i].original_title, //titolo originale del film 
                         original_language: results[i].original_language, //lingua originale film
                         vote_average: this.parseStars(results[i].vote_average), //voto medio del film
-                        poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine del film
+                        poster_path: results[i].poster_path, //percorso dell'immagine del film
                         overview: results[i].overview, //trama del film
                         genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "movie"), //id dei generi
                         id: results[i].id, //id del film
@@ -85,7 +85,7 @@ export default {
                         original_title: results[i].original_name, //nome originale della serie tv
                         original_language: results[i].original_language, //lingua originale della serie tv
                         vote_average: this.parseStars(results[i].vote_average), //voto medio della serie tv
-                        poster_path: "https://image.tmdb.org/t/p/w780" + results[i].poster_path, //percorso dell'immagine della serie tv
+                        poster_path: results[i].poster_path, //percorso dell'immagine della serie tv
                         overview: results[i].overview, //trama della serie tv
                         genre_ids: this.parseGenreFromIdToName([...results[i].genre_ids], "tv"), //id dei generi
                         id: results[i].id, //id del film
